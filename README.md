@@ -10,7 +10,7 @@ artifacts.
 ## Project Structure
 
 ```text
-EfficientUNet_inference_genio700/
+EfficientUNet_Inference/
 ├── README.md
 ├── config.py
 ├── requirements-evk.txt
@@ -60,7 +60,7 @@ Clone the repository on the EVK:
 
 ```bash
 git clone <repo-url>
-cd EfficientUNet_inference_genio700
+cd EfficientUNet_Inference
 ```
 
 Create and activate a virtual environment:
