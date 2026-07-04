@@ -1,26 +1,86 @@
-.vscode
-.venv/
+# Python cache
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# macOS
 .DS_Store
 **/.DS_Store
 
+# Editor / IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+logs/
+
+# Environment / secrets
+.env
+.env.*
+*.pem
+*.key
+*.crt
+
+# Model files - do not commit ITRI model artifacts
 models/*
 !models/.gitkeep
-
-images/input/*
-!images/input/.gitkeep
-
-images/output/*
-!images/output/.gitkeep
-
 *.pt
 *.pth
 *.onnx
+*.onnx.data
 *.tflite
-*.log
-.env
+*.engine
+*.plan
+*.weights
+*.ckpt
 
-mentor_convert_code.py.DS_Store
-**/.DS_Store
-.vscode/
+# Input/output images - do not commit internal data or results
+images/input/*
+!images/input/.gitkeep
+images/output/*
+!images/output/.gitkeep
+
+# Local conversion / development tools
+requirements-dev.txt
+tools/convert_to_onnx.py
+tools/convert_to_tflite.py
+tools/verify_model_outputs.py
+tools/mentor_convert_code.py
+
+# Conversion temporary folders
+models/_tflite_build/
+saved_model/
+*_saved_model/
+*.pb
+*.h5
+*.keras
+
+# ONNX / TFLite converter generated reports
+*_accuracy_report.json
+*_op_coverage_report.json
+*_split_accuracy_report.json
+*_param_replacement.json
+
+# Jupyter / notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# Build / package artifacts
+build/
+dist/
+*.egg-info/
+
+# Runtime output folders
+tmp/
+temp/
+.cache/

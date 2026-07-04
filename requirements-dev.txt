@@ -1,6 +1,0 @@
-torch
-onnx
-onnxruntime
-tensorflow
-onnx2tf
-onnxsim
