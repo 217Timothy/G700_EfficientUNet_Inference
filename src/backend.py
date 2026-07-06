@@ -63,11 +63,15 @@ class ONNXBackend:
 class TFLiteBackend:
     def __init__(self, model_path: str | Path) -> None:
         try:
-            import tflite_runtime.interpreter as tflite # type: ignore
+            import ai_edge_litert.interpreter import Interpreter # type: ignore
         except ImportError:
-            import tensorflow.lite as tflite
+            try:
+                from tflite_runtime.interpreter import Interpreter # type: ignore
+            except ImportError:
+                import tensorflow as tf
+                Interpreter = tf.lite.Interpreter
         
-        self.interpreter = tflite.Interpreter(model_path=str(model_path)) # type: ignore
+        self.interpreter = Interpreter(model_path=str(model_path)) # type: ignore
         self.interpreter.allocate_tensors()
 
         self.input_details = self.interpreter.get_input_details()
