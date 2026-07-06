@@ -63,7 +63,7 @@ class ONNXBackend:
 class TFLiteBackend:
     def __init__(self, model_path: str | Path) -> None:
         try:
-            import ai_edge_litert.interpreter import Interpreter # type: ignore
+            from ai_edge_litert.interpreter import Interpreter # type: ignore
         except ImportError:
             try:
                 from tflite_runtime.interpreter import Interpreter # type: ignore

@@ -1,7 +1,7 @@
-# EfficientUNet Inference for Genio 700
+# EfficientUNet_Inference
 
-Runtime-only semantic segmentation inference project for a MediaTek Genio 700
-EVK running Linux.
+Runtime-only EfficientUNet semantic segmentation inference project for
+MediaTek Genio 700 EVK deployment on Linux.
 
 This repository is intended for deployment and inference only. It does not
 contain training code, training data, model conversion scripts, or model
@@ -15,6 +15,8 @@ EfficientUNet_Inference/
 ├── config.py
 ├── requirements-evk.txt
 ├── run.sh
+├── tools/
+│   └── benchmark_inference.py
 ├── models/
 │   └── .gitkeep
 ├── images/
@@ -47,7 +49,7 @@ The EVK runtime environment should stay minimal:
 ```text
 numpy
 opencv-python-headless
-tflite-runtime
+ai-edge-litert
 ```
 
 Do not install training or conversion dependencies on the EVK, such as
@@ -128,6 +130,64 @@ For Genio 700 deployment, use:
 ```
 
 The ONNX backend is kept for local validation and backend compatibility work.
+
+## Benchmarking 50 Images
+
+For runtime evaluation on the EVK, place the sampled benchmark images under:
+
+```text
+images/input/benchmark50/
+```
+
+Recommended layout:
+
+```text
+images/input/benchmark50/
+├── abrasion__<image_name>.png
+├── chronic__<image_name>.png
+├── cut__<image_name>.png
+├── footulcer__<image_name>.png
+└── laceration__<image_name>.png
+```
+
+Copy the benchmark folder from the development machine to the EVK:
+
+```bash
+scp -r images/input/benchmark50 \
+  ubuntu@172.20.10.2:/home/ubuntu/EfficientUNet_Inference/images/input/
+```
+
+Run benchmark inference on the EVK:
+
+```bash
+python tools/benchmark_inference.py \
+  --model models/model.tflite \
+  --backend tflite \
+  --image-dir images/input/benchmark50 \
+  --output images/output/benchmark50
+```
+
+To also save mask and overlay outputs:
+
+```bash
+python tools/benchmark_inference.py \
+  --model models/model.tflite \
+  --backend tflite \
+  --image-dir images/input/benchmark50 \
+  --output images/output/benchmark50 \
+  --save-outputs
+```
+
+Benchmark outputs:
+
+```text
+images/output/benchmark50/benchmark_results.csv
+images/output/benchmark50/benchmark_report.json
+```
+
+The benchmark script loads the model once, warms up the backend, then runs each
+image one by one. It reports average backend inference time and average total
+pipeline time separately.
 
 ## Preprocessing
 
